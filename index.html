@@ -268,6 +268,8 @@
   .footer-links{
     display:flex;
     justify-content:center;
+    align-items:center;
+    text-align:center;
     gap:28px;
     flex-wrap:wrap;
     margin-bottom:28px;
@@ -280,6 +282,10 @@
   @media (max-width:600px){
     header{ padding:16px; }
     .btn{ padding:10px 18px; font-size:13px; }
+    .footer-links{
+      flex-direction:column;
+      gap:14px;
+    }
   }
 </style>
 </head>
@@ -344,9 +350,9 @@
         <p>Inventario en tiempo real, sin faltantes ni mermas fuera de control.</p>
       </div>
       <div class="card">
-        <div class="icon">💳</div>
+        <div class="icon">📋</div>
         <h3>Registro de Expendio</h3>
-        <p>Dispensario ágil vinculadas directamente el socio.</p>
+        <p>Dispensa ágil vinculada directamente a caja y socio.</p>
       </div>
       <div class="card">
         <div class="icon">👥</div>
@@ -392,7 +398,6 @@
       <h2>Zentry en acción</h2>
     </div>
     <div class="video-wrap">
-      <!-- Reemplazar SRC_DEL_VIDEO por el link de YouTube en formato embed, ej: https://www.youtube.com/embed/ID_DEL_VIDEO -->
       <iframe src="https://www.youtube.com/embed/7-hWpAW7GfU" title="Zentry" allowfullscreen></iframe>
     </div>
   </div>
@@ -411,4 +416,3 @@
 
 </body>
 </html>
-
