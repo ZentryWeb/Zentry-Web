@@ -160,16 +160,17 @@
     grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
     gap:28px;
   }
-  .device-frame{
+   .device-frame{
     background:var(--bg-alt);
     border:1px solid rgba(46,201,255,0.25);
     border-radius:16px;
     padding:10px;
-        box-shadow:0 0 30px rgba(46,201,255,0.08);
+    box-shadow:0 0 30px rgba(46,201,255,0.08);
     transition:transform .3s ease;
-    overflow:hidden;
   }
   .device-frame:hover{ transform:translateY(-6px); position:relative; z-index:5; }
+  .device-frame .bar{
+    display:flex;
     gap:6px;
     padding:6px 8px 12px;
   }
