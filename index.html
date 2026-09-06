@@ -165,9 +165,9 @@
     border:1px solid rgba(46,201,255,0.25);
     border-radius:16px;
     padding:10px;
-    box-shadow:0 0 30px rgba(46,201,255,0.08);
+        box-shadow:0 0 30px rgba(46,201,255,0.08);
     transition:transform .3s ease;
-        overflow:hidden;
+    overflow:hidden;
   }
   .device-frame:hover{ transform:translateY(-6px); }
   .device-frame .bar{
@@ -179,13 +179,17 @@
     width:8px; height:8px; border-radius:50%;
     background:var(--gray); opacity:.5;
   }
-  .device-frame img{
+   .device-frame img{
     width:100%;
     display:block;
     border-radius:10px;
     background:#0F1620;
     min-height:180px;
     object-fit:cover;
+    transition:transform .35s ease;
+  }
+  .device-frame:hover img{
+    transform:scale(1.25);
   }
 
   /* Benefits */
