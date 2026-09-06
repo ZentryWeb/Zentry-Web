@@ -1,470 +1,409 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zentry - Sistema de Gestión para Clubes Cannábicos</title>
-    <style>
-        :root {
-            --bg-color: #0b0f0e;
-            --surface-color: #131b18;
-            --surface-card: #182420;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border-color: #22302b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentry - Gestión inteligente para asociaciones civiles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1015;
+    --bg-alt:#0F1620;
+    --green:#29F28D;
+    --cyan:#2EC9FF;
+    --white:#E8EEF3;
+    --gray:#7D8A93;
+    --amber:#FFB648;
+    --coral:#FF5A6E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{
+    font-family:'Orbitron', sans-serif;
+  }
+  a{ text-decoration:none; }
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 24px;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+  /* Background grid / glow effect */
+  .bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image:
+      linear-gradient(rgba(46,201,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,201,255,0.06) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .glow{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(120px);
+    z-index:-1;
+    opacity:0.35;
+  }
+  .glow-1{ width:500px; height:500px; background:var(--green); top:-150px; left:-100px; }
+  .glow-2{ width:500px; height:500px; background:var(--cyan); top:200px; right:-150px; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+  /* Header */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 24px;
+    position:sticky;
+    top:0;
+    background:rgba(11,16,21,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(125,138,147,0.15);
+    z-index:10;
+  }
+  header .brand-wrap{ display:flex; align-items:center; gap:10px; }
+  header img.logo{ height:38px; display:block; }
+  header .brand{ font-size:20px; font-weight:700; color:var(--white); letter-spacing:1px; }
+  .btn{
+    display:inline-block;
+    padding:12px 24px;
+    border-radius:8px;
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    transition:all .2s ease;
+    cursor:pointer;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:var(--green);
+    color:#0B1015;
+    box-shadow:0 0 20px rgba(41,242,141,0.35);
+  }
+  .btn-primary:hover{ box-shadow:0 0 30px rgba(41,242,141,0.6); transform:translateY(-1px); }
+  .btn-outline{
+    border:1px solid var(--cyan);
+    color:var(--cyan);
+    background:transparent;
+  }
+  .btn-outline:hover{ background:rgba(46,201,255,0.1); }
 
-        /* Utilidades generales */
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+  /* Hero */
+  .hero{
+    padding:100px 24px 80px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .eyebrow{
+    display:inline-block;
+    color:var(--cyan);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    border:1px solid rgba(46,201,255,0.4);
+    padding:6px 16px;
+    border-radius:20px;
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(32px, 6vw, 56px);
+    font-weight:900;
+    line-height:1.15;
+    margin-bottom:20px;
+    background:linear-gradient(120deg, var(--white) 40%, var(--green));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero p{
+    color:var(--gray);
+    font-size:18px;
+    max-width:640px;
+    margin:0 auto 36px;
+  }
+  .hero .cta-row{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
 
-        /* 1. Header */
-        header {
-            background-color: rgba(19, 27, 24, 0.85);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+  /* Section titles */
+  .section{ padding:80px 24px; }
+  .section-head{ text-align:center; margin-bottom:56px; }
+  .section-head .tag{
+    color:var(--green);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  .section-head h2{
+    font-size:clamp(26px, 4vw, 38px);
+    margin-top:10px;
+  }
+  .section-head p{ color:var(--gray); margin-top:14px; max-width:520px; margin-left:auto; margin-right:auto; }
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
+  /* Screenshots */
+  .screens{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:28px;
+  }
+  .device-frame{
+    background:var(--bg-alt);
+    border:1px solid rgba(46,201,255,0.25);
+    border-radius:16px;
+    padding:10px;
+    box-shadow:0 0 30px rgba(46,201,255,0.08);
+    transition:transform .3s ease;
+  }
+  .device-frame:hover{ transform:translateY(-6px); }
+  .device-frame .bar{
+    display:flex;
+    gap:6px;
+    padding:6px 8px 12px;
+  }
+  .device-frame .bar span{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--gray); opacity:.5;
+  }
+  .device-frame img{
+    width:100%;
+    display:block;
+    border-radius:10px;
+    background:#0F1620;
+    min-height:180px;
+    object-fit:cover;
+  }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  /* Benefits */
+  .benefits{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:24px;
+  }
+  .card{
+    background:var(--bg-alt);
+    border:1px solid rgba(125,138,147,0.15);
+    border-radius:14px;
+    padding:32px 24px;
+    transition:all .25s ease;
+  }
+  .card:hover{
+    border-color:rgba(41,242,141,0.4);
+    box-shadow:0 0 24px rgba(41,242,141,0.12);
+    transform:translateY(-4px);
+  }
+  .card .icon{
+    width:44px; height:44px;
+    border-radius:10px;
+    background:rgba(41,242,141,0.1);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+    margin-bottom:18px;
+    color:var(--green);
+  }
+  .card h3{ font-size:17px; margin-bottom:10px; }
+  .card p{ color:var(--gray); font-size:14px; }
 
-        .logo span {
-            color: var(--primary);
-        }
+  /* Steps */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:32px;
+    counter-reset:step;
+  }
+  .step{ position:relative; padding-left:56px; }
+  .step::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;
+    left:0; top:0;
+    width:40px; height:40px;
+    border-radius:10px;
+    background:linear-gradient(135deg, var(--green), var(--cyan));
+    color:#0B1015;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Orbitron', sans-serif;
+    font-weight:700;
+  }
+  .step h3{ font-size:17px; margin-bottom:8px; }
+  .step p{ color:var(--gray); font-size:14px; }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: #051911;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.2s, transform 0.1s;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
+  /* Video */
+  .video-wrap{
+    max-width:800px;
+    margin:0 auto;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid rgba(46,201,255,0.25);
+    box-shadow:0 0 40px rgba(46,201,255,0.1);
+    aspect-ratio:16/9;
+  }
+  .video-wrap iframe{ width:100%; height:100%; border:0; display:block; }
 
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
+  /* Footer */
+  footer{
+    padding:56px 24px 32px;
+    border-top:1px solid rgba(125,138,147,0.15);
+    text-align:center;
+  }
+  footer .brand{ font-size:18px; margin-bottom:10px; }
+  footer .tagline{ color:var(--gray); font-size:14px; margin-bottom:28px; }
+  .footer-links{
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+    font-size:14px;
+  }
+  .footer-links a{ color:var(--cyan); }
+  .footer-links a:hover{ color:var(--green); }
+  footer .copy{ color:var(--gray); font-size:12px; }
 
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        /* 2. Hero Section */
-        .hero {
-            padding: 80px 0 60px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 35px;
-        }
-
-        .hero-cta {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        /* 3. Sección de Beneficios */
-        .benefits {
-            padding: 70px 0;
-            background-color: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 50px;
-            font-size: 1.05rem;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background-color: var(--surface-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 30px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background-color: rgba(16, 185, 129, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* 4. Sección "Cómo funciona" */
-        .how-it-works {
-            padding: 80px 0;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .step-item {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: #051911;
-            font-weight: 700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 1.1rem;
-        }
-
-        .step-item h3 {
-            font-size: 1.15rem;
-            margin-bottom: 8px;
-        }
-
-        .step-item p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* 5. Sección de Precios */
-        .pricing {
-            padding: 80px 0;
-            background-color: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .pricing-card {
-            max-width: 450px;
-            margin: 0 auto;
-            background-color: var(--surface-card);
-            border: 2px solid var(--primary);
-            border-radius: 16px;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary);
-            color: #051911;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .pricing-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin: 20px 0;
-        }
-
-        .price span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: normal;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pricing-features li::before {
-            content: "✓";
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .pricing-card .btn-primary {
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 1rem;
-        }
-
-        /* 6. Footer */
-        footer {
-            padding: 50px 0 30px;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-link {
-            background-color: var(--surface-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: border-color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .social-link:hover {
-            border-color: var(--primary);
-        }
-
-        .footer-copy {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 20px;
-        }
-    </style>
+  @media (max-width:600px){
+    header{ padding:16px; }
+    .btn{ padding:10px 18px; font-size:13px; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">Zen<span>try</span></a>
-            <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Solicitar Demo</a>
-        </div>
-    </header>
+<div class="bg-grid"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
 
-    <section class="hero">
-        <div class="container">
-            <h1>El control total de tu club cannábico, <span>en la palma de tu mano</span></h1>
-            <p>Un sistema simple y seguro para gestionar stock, ventas, socios y caja de tu asociación civil. Sin instalaciones complejas: usalo desde el celular o la computadora.</p>
-            <div class="hero-cta">
-                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Solicitar Demo por WhatsApp</a>
-            </div>
-        </div>
-    </section>
+<header>
+  <div class="brand-wrap">
+    <img class="logo" src="logo.png" alt="Zentry">
+    <span class="brand">ZENTRY</span>
+  </div>
+  <a class="btn btn-primary" href="https://wa.me/5491153440001" target="_blank">Solicitar Demo</a>
+</header>
 
-    <section class="benefits">
-        <div class="container">
-            <h2 class="section-title">Todo lo que tu club necesita</h2>
-            <p class="section-subtitle">Diseñado específicamente para optimizar la operativa diaria de asociaciones civiles.</p>
-            
-            <div class="benefits-grid">
-                <div class="card">
-                    <div class="card-icon">📦</div>
-                    <h3>Control de Stock</h3>
-                    <p>Llevá el inventario de cepas y productos en tiempo real. Evita faltantes y controla mermas con total precisión.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💳</div>
-                    <h3>Registro de Ventas</h3>
-                    <p>Agilizá la atención en mostrador con transacciones rápidas vinculadas directamente a la caja y al socio correspondiente.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">👥</div>
-                    <h3>Control de Socios</h3>
-                    <p>Base de datos segura de asociados con control de membresías, aportes y cuotas al día de forma automatizada.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">☁️</div>
-                    <h3>Todo en la Nube</h3>
-                    <p>Acceso inmediato desde cualquier dispositivo. Sin costos ocultos de servidores propios y con máxima seguridad de datos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero">
+  <span class="eyebrow">Gestión inteligente</span>
+  <h1>Gestión inteligente para<br>asociaciones civiles</h1>
+  <p>El software para gestionar pacientes, stock, expendios, caja y reportes desde una única plataforma. Orden, rapidez y control total, en tiempo real.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://wa.me/5491153440001" target="_blank">Solicitar Demo</a>
+    <a class="btn btn-outline" href="#screens">Ver el sistema</a>
+  </div>
+</section>
 
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">¿Cómo funciona?</h2>
-            <p class="section-subtitle">Empezá a operar en cuestión de minutos.</p>
-            
-            <div class="steps-grid">
-                <div class="step-item">
-                    <div class="step-number">1</div>
-                    <h3>Solicitá tu acceso</h3>
-                    <p>Escribinos por WhatsApp para coordinar la activación de tu cuenta personalizada para el club.</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">2</div>
-                    <h3>Cargá tus datos</h3>
-                    <p>Registrá a tus socios, da de alta el stock inicial de productos y configura los perfiles de acceso.</p>
-                </div>
-                <div class="step-item">
-                    <div class="step-number">3</div>
-                    <h3>¡Listo para operar!</h3>
-                    <p>Comenzá a gestionar ventas, caja y socios desde el celular o la computadora sin complicaciones.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="section" id="screens">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">La plataforma</span>
+      <h2>Un panel de control, todo en orden</h2>
+      <p>Así se ve Zentry por dentro: simple, rápido y pensado para el día a día de tu asociación.</p>
+    </div>
+    <div class="screens">
+      <div class="device-frame">
+        <div class="bar"><span></span><span></span><span></span></div>
+        <img src="captura1.png" alt="Captura Zentry 1">
+      </div>
+      <div class="device-frame">
+        <div class="bar"><span></span><span></span><span></span></div>
+        <img src="captura2.png" alt="Captura Zentry 2">
+      </div>
+      <div class="device-frame">
+        <div class="bar"><span></span><span></span><span></span></div>
+        <img src="captura3.png" alt="Captura Zentry 3">
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="pricing">
-        <div class="container">
-            <h2 class="section-title">Precio simple y transparente</h2>
-            <p class="section-subtitle">Sin costos de instalación ni sorpresas ocultas.</p>
-            
-            <div class="pricing-card">
-                <div class="pricing-badge">Plan Único</div>
-                <h3>Suscripción Mensual Clubes</h3>
-                <div class="price">$[PRECIO] <span>/ mes</span></div>
-                <ul class="pricing-features">
-                    <li>Socios ilimitados en el sistema</li>
-                    <li>Control de stock y ventas en tiempo real</li>
-                    <li>Caja diaria y reportes automáticos</li>
-                    <li>Acceso multiusuario (celular y PC)</li>
-                    <li>Soporte técnico prioritario por WhatsApp</li>
-                </ul>
-                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Contratar Plan</a>
-            </div>
-        </div>
-    </section>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Beneficios</span>
+      <h2>Todo lo que tu asociación necesita</h2>
+    </div>
+    <div class="benefits">
+      <div class="card">
+        <div class="icon">📦</div>
+        <h3>Control de Stock</h3>
+        <p>Inventario en tiempo real, sin faltantes ni mermas fuera de control.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💳</div>
+        <h3>Registro de Ventas</h3>
+        <p>Transacciones ágiles vinculadas directamente a caja y socio.</p>
+      </div>
+      <div class="card">
+        <div class="icon">👥</div>
+        <h3>Gestión de Socios</h3>
+        <p>Base de datos segura de pacientes y asociados, siempre actualizada.</p>
+      </div>
+      <div class="card">
+        <div class="icon">☁️</div>
+        <h3>Todo en la Nube</h3>
+        <p>Acceso inmediato desde cualquier dispositivo, sin servidores propios.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <div class="container footer-content">
-            <a href="#" class="logo">Zen<span>try</span></a>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">El software de gestión definitivo para clubes cannábicos.</p>
-            
-            <div class="social-links">
-                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="social-link" target="_blank" rel="noopener">WhatsApp</a>
-                <a href="https://instagram.com/AQUATUPERFILDEINSTAGRAM" class="social-link" target="_blank" rel="noopener">Instagram</a>
-            </div>
-            
-            <p class="footer-copy">&copy; 2026 Zentry. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Cómo funciona</span>
+      <h2>Empezá a operar en minutos</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Solicitá tu acceso</h3>
+        <p>Coordinamos por WhatsApp la activación de tu cuenta.</p>
+      </div>
+      <div class="step">
+        <h3>Cargá tus datos</h3>
+        <p>Socios, stock inicial y perfiles de acceso, todo en un solo lugar.</p>
+      </div>
+      <div class="step">
+        <h3>Listo para operar</h3>
+        <p>Gestioná ventas, caja y socios desde el celular o la computadora.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Video</span>
+      <h2>Zentry en acción</h2>
+    </div>
+    <div class="video-wrap">
+      <!-- Reemplazar SRC_DEL_VIDEO por el link de YouTube en formato embed, ej: https://www.youtube.com/embed/ID_DEL_VIDEO -->
+      <iframe src="SRC_DEL_VIDEO" title="Zentry" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">ZENTRY</div>
+  <div class="tagline">Gestión inteligente para asociaciones civiles.</div>
+  <div class="footer-links">
+    <a href="https://wa.me/5491153440001" target="_blank">WhatsApp</a>
+    <a href="mailto:zentry.gestionapp@gmail.com">zentry.gestionapp@gmail.com</a>
+    <a href="https://instagram.com/evolu_ta" target="_blank">Instagram</a>
+  </div>
+  <div class="copy">© 2026 Zentry. Todos los derechos reservados.</div>
+</footer>
 
 </body>
 </html>
-
