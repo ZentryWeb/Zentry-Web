@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentry - Sistema de Gestión para Clubes Cannábicos</title>
+    <style>
+        :root {
+            --bg-color: #0b0f0e;
+            --surface-color: #131b18;
+            --surface-card: #182420;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #22302b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Utilidades generales */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 1. Header */
+        header {
+            background-color: rgba(19, 27, 24, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #051911;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* 2. Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 35px;
+        }
+
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* 3. Sección de Beneficios */
+        .benefits {
+            padding: 70px 0;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            font-size: 1.05rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 4. Sección "Cómo funciona" */
+        .how-it-works {
+            padding: 80px 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: #051911;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.1rem;
+        }
+
+        .step-item h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .step-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 5. Sección de Precios */
+        .pricing {
+            padding: 80px 0;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pricing-card {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: var(--surface-card);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: #051911;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .pricing-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 1rem;
+        }
+
+        /* 6. Footer */
+        footer {
+            padding: 50px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-link:hover {
+            border-color: var(--primary);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Zen<span>try</span></a>
+            <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Solicitar Demo</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>El control total de tu club cannábico, <span>en la palma de tu mano</span></h1>
+            <p>Un sistema simple y seguro para gestionar stock, ventas, socios y caja de tu asociación civil. Sin instalaciones complejas: usalo desde el celular o la computadora.</p>
+            <div class="hero-cta">
+                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Solicitar Demo por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Todo lo que tu club necesita</h2>
+            <p class="section-subtitle">Diseñado específicamente para optimizar la operativa diaria de asociaciones civiles.</p>
+            
+            <div class="benefits-grid">
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3>Control de Stock</h3>
+                    <p>Llevá el inventario de cepas y productos en tiempo real. Evita faltantes y controla mermas con total precisión.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>Registro de Ventas</h3>
+                    <p>Agilizá la atención en mostrador con transacciones rápidas vinculadas directamente a la caja y al socio correspondiente.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👥</div>
+                    <h3>Control de Socios</h3>
+                    <p>Base de datos segura de asociados con control de membresías, aportes y cuotas al día de forma automatizada.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Todo en la Nube</h3>
+                    <p>Acceso inmediato desde cualquier dispositivo. Sin costos ocultos de servidores propios y con máxima seguridad de datos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">¿Cómo funciona?</h2>
+            <p class="section-subtitle">Empezá a operar en cuestión de minutos.</p>
+            
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Solicitá tu acceso</h3>
+                    <p>Escribinos por WhatsApp para coordinar la activación de tu cuenta personalizada para el club.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Cargá tus datos</h3>
+                    <p>Registrá a tus socios, da de alta el stock inicial de productos y configura los perfiles de acceso.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>¡Listo para operar!</h3>
+                    <p>Comenzá a gestionar ventas, caja y socios desde el celular o la computadora sin complicaciones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Precio simple y transparente</h2>
+            <p class="section-subtitle">Sin costos de instalación ni sorpresas ocultas.</p>
+            
+            <div class="pricing-card">
+                <div class="pricing-badge">Plan Único</div>
+                <h3>Suscripción Mensual Clubes</h3>
+                <div class="price">$[PRECIO] <span>/ mes</span></div>
+                <ul class="pricing-features">
+                    <li>Socios ilimitados en el sistema</li>
+                    <li>Control de stock y ventas en tiempo real</li>
+                    <li>Caja diaria y reportes automáticos</li>
+                    <li>Acceso multiusuario (celular y PC)</li>
+                    <li>Soporte técnico prioritario por WhatsApp</li>
+                </ul>
+                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="btn-primary" target="_blank" rel="noopener">Contratar Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <a href="#" class="logo">Zen<span>try</span></a>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">El software de gestión definitivo para clubes cannábicos.</p>
+            
+            <div class="social-links">
+                <a href="https://wa.me/AQUAPUNTUNUMERODEWHATSAPP" class="social-link" target="_blank" rel="noopener">WhatsApp</a>
+                <a href="https://instagram.com/AQUATUPERFILDEINSTAGRAM" class="social-link" target="_blank" rel="noopener">Instagram</a>
+            </div>
+            
+            <p class="footer-copy">&copy; 2026 Zentry. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
